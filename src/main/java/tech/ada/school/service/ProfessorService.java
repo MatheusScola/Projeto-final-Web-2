@@ -3,6 +3,7 @@ package tech.ada.school.service;
 import org.apache.tomcat.util.bcel.classfile.ArrayElementValue;
 import org.springframework.stereotype.Service;
 import tech.ada.school.domain.dto.ProfessorDto;
+import tech.ada.school.domain.dto.exception.NotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,12 +32,12 @@ public class ProfessorService implements IProfessorService {
     }
 
     @Override
-    public ProfessorDto buscarProfessor(int id) {
+    public ProfessorDto buscarProfessor(int id) throws NotFoundException {
         return professores
                 .stream()
                 .filter(it -> it.getId() == id)
                 .findFirst()
-                .orElse(null);
+                .orElseThrow(() -> new NotFoundException(ProfessorDto.class, String.valueOf(id)));
     }
 
     @Override
@@ -44,7 +45,7 @@ public class ProfessorService implements IProfessorService {
         final ProfessorDto professor = professores.stream()
                 .filter(it -> it.getId() == id)
                 .findFirst()
-                .orElseGet(null);
+                .orElse(null);
 
         if (professor == null) {
             return null;
@@ -63,7 +64,7 @@ public class ProfessorService implements IProfessorService {
     }
 
     @Override
-    public void removerProfessor(int id) {
+    public void removerProfessor(int id) throws NotFoundException {
         final ProfessorDto professor = buscarProfessor(id);
         professores.remove(professor);
     }

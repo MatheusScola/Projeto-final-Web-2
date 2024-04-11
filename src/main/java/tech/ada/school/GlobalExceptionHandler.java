@@ -14,7 +14,6 @@ import javax.swing.plaf.SpinnerUI;
 public class GlobalExceptionHandler {
     @ExceptionHandler(value = NotFoundException.class)
     public ResponseEntity<ErrorResponse> handleNotFoundException(final NotFoundException exception) {
-        System.out.println(exception.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ErrorResponse.createFromException(exception));
     }
 
