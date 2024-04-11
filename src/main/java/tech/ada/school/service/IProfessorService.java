@@ -12,7 +12,7 @@ public interface IProfessorService {
 
     ProfessorDto buscarProfessor(int id) throws NotFoundException;
 
-    ProfessorDto atualizarProfessor(int id, ProfessorDto pedido);
+    ProfessorDto atualizarProfessor(int id, ProfessorDto pedido) throws NotFoundException;
 
     void removerProfessor(int id) throws NotFoundException;
 }

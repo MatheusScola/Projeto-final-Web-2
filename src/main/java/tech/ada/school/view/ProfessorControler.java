@@ -36,7 +36,7 @@ public class ProfessorControler {
     public ResponseEntity<ProfessorDto> atualizarProfessor (
         @PathVariable("id") int id,
         @RequestBody ProfessorDto pedido
-    ) {
+    ) throws NotFoundException {
         final ProfessorDto p = service.atualizarProfessor(id, pedido);
 
         if (p == null) {

@@ -41,11 +41,11 @@ public class ProfessorService implements IProfessorService {
     }
 
     @Override
-    public ProfessorDto atualizarProfessor(int id, ProfessorDto pedido) {
+    public ProfessorDto atualizarProfessor(int id, ProfessorDto pedido) throws NotFoundException {
         final ProfessorDto professor = professores.stream()
                 .filter(it -> it.getId() == id)
                 .findFirst()
-                .orElse(null);
+                .orElseThrow(() -> new NotFoundException(ProfessorDto.class, String.valueOf(id)));
 
         if (professor == null) {
             return null;
