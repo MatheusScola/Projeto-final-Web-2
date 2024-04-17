@@ -1,8 +1,7 @@
 package tech.ada.school.service;
 
-import ch.qos.logback.classic.pattern.NopThrowableInformationConverter;
 import tech.ada.school.domain.dto.AlunoDto;
-import tech.ada.school.domain.dto.exception.NotFoundException;
+import tech.ada.school.domain.exception.NotFoundException;
 
 import java.util.List;
 
@@ -18,6 +17,4 @@ public interface IAlunoService {
     AlunoDto atualizarAluno(int id, AlunoDto novoAluno) throws NotFoundException;
 
     void removerAluno(int id) throws NotFoundException;
-
-
 }

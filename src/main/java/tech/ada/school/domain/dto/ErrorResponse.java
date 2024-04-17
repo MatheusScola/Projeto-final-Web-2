@@ -3,10 +3,9 @@ package tech.ada.school.domain.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import tech.ada.school.domain.dto.exception.NotFoundException;
+import tech.ada.school.domain.exception.NotFoundException;
 
 import java.util.Collection;
-import java.util.stream.Collectors;
 
 @Data
 public class ErrorResponse {

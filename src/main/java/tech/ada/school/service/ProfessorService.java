@@ -1,9 +1,8 @@
 package tech.ada.school.service;
 
-import org.apache.tomcat.util.bcel.classfile.ArrayElementValue;
 import org.springframework.stereotype.Service;
 import tech.ada.school.domain.dto.ProfessorDto;
-import tech.ada.school.domain.dto.exception.NotFoundException;
+import tech.ada.school.domain.exception.NotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;

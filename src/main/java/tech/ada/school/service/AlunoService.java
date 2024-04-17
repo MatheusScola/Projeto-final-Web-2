@@ -2,7 +2,7 @@ package tech.ada.school.service;
 
 import org.springframework.stereotype.Service;
 import tech.ada.school.domain.dto.AlunoDto;
-import tech.ada.school.domain.dto.exception.NotFoundException;
+import tech.ada.school.domain.exception.NotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;

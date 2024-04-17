@@ -1,7 +1,7 @@
 package tech.ada.school.service;
 
 import tech.ada.school.domain.dto.ProfessorDto;
-import tech.ada.school.domain.dto.exception.NotFoundException;
+import tech.ada.school.domain.exception.NotFoundException;
 
 import java.util.List;
 
