@@ -15,4 +15,6 @@ public interface IProfessorService {
     ProfessorDto atualizarProfessor(int id, ProfessorDto pedido) throws NotFoundException;
 
     void removerProfessor(int id) throws NotFoundException;
+
+    ProfessorDto buscarPorCpf(String cpf) throws NotFoundException;
 }

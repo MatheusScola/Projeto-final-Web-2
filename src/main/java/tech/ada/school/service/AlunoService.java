@@ -21,6 +21,8 @@ public class AlunoService implements IAlunoService{
         final AlunoDto aluno = new AlunoDto(
                 id++,
                 pedido.getNome(),
+                pedido.getCpf(),
+                pedido.getEmail(),
                 pedido.getTurma()
         );
         alunos.add(aluno);
@@ -33,17 +35,12 @@ public class AlunoService implements IAlunoService{
     }
 
     @Override
-    public List<AlunoDto> buscarTurma(String turma) throws NotFoundException {
+    public List<AlunoDto> buscarTurma(String turma) {
 
-        List<AlunoDto> alunosPorTurma = alunos
+        return alunos
                 .stream()
                 .filter(it -> Objects.equals(it.getTurma(), turma))
                 .toList();
-
-        if (alunosPorTurma.isEmpty()) {
-            throw new NotFoundException(AlunoDto.class, turma);
-        }
-        return alunosPorTurma;
     }
 
     @Override
@@ -68,7 +65,7 @@ public class AlunoService implements IAlunoService{
         }
         alunos.remove(aluno);
 
-        final AlunoDto a = new AlunoDto(id, novoAluno.getNome(), novoAluno.getTurma());
+        final AlunoDto a = new AlunoDto(id, novoAluno.getNome(), novoAluno.getCpf(), novoAluno.getEmail(), novoAluno.getTurma());
         alunos.add(a);
         return a;
     }
@@ -77,5 +74,10 @@ public class AlunoService implements IAlunoService{
     public void removerAluno(int id) throws NotFoundException {
         AlunoDto aluno = buscarAluno(id);
         alunos.remove(aluno);
+    }
+
+    @Override
+    public AlunoDto buscarAlunoPorCpf(String cpf) throws NotFoundException {
+        return null;
     }
 }

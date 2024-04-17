@@ -10,11 +10,13 @@ public interface IAlunoService {
 
     List<AlunoDto> listarAlunos();
 
-    List<AlunoDto> buscarTurma(String turma) throws NotFoundException;
+    List<AlunoDto> buscarTurma(String turma);
 
     AlunoDto buscarAluno(int id) throws NotFoundException;
 
     AlunoDto atualizarAluno(int id, AlunoDto novoAluno) throws NotFoundException;
 
     void removerAluno(int id) throws NotFoundException;
+
+    AlunoDto buscarAlunoPorCpf(String cpf) throws NotFoundException;
 }

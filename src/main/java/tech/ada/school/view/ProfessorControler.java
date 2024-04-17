@@ -1,6 +1,7 @@
 package tech.ada.school.view;
 
 import jakarta.validation.Valid;
+import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -59,5 +60,12 @@ public class ProfessorControler {
     ) throws NotFoundException {
         service.removerProfessor(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/cpf/{cpf}")
+    public ResponseEntity<ProfessorDto> buscarPorCpf(
+            @PathParam("cpf") String cpf
+    ) throws NotFoundException  {
+        return ResponseEntity.ok(service.buscarPorCpf(cpf));
     }
 }
