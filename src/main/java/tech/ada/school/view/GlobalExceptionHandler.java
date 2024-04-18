@@ -6,6 +6,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import tech.ada.school.domain.dto.ErrorResponse;
+import tech.ada.school.domain.exception.DuplicateKeyException;
 import tech.ada.school.domain.exception.NotFoundException;
 
 @ControllerAdvice
@@ -13,6 +14,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<ErrorResponse> handleNotFoundException(final NotFoundException exception) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ErrorResponse.createFromException(exception));
+    }
+
+    @ExceptionHandler(DuplicateKeyException.class)
+    public ResponseEntity<ErrorResponse> handleDuplicateKeyException(final DuplicateKeyException exception) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(ErrorResponse.createFromException(exception));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

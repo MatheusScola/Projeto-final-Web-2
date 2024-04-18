@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tech.ada.school.domain.dto.AlunoDto;
+import tech.ada.school.domain.exception.DuplicateKeyException;
 import tech.ada.school.domain.exception.NotFoundException;
 import tech.ada.school.service.IAlunoService;
 
@@ -36,7 +37,7 @@ public class AlunoController {
     @PostMapping
     public ResponseEntity<AlunoDto> criarAluno(
             @RequestBody @Valid AlunoDto pedido
-    ) {
+    ) throws DuplicateKeyException {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.criarAluno(pedido));
     }
 

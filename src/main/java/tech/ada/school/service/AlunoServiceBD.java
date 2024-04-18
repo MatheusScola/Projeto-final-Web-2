@@ -5,12 +5,14 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import tech.ada.school.domain.dto.AlunoDto;
 import tech.ada.school.domain.entities.Aluno;
+import tech.ada.school.domain.exception.DuplicateKeyException;
 import tech.ada.school.domain.exception.NotFoundException;
 import tech.ada.school.domain.mappers.AlunoMapper;
 import tech.ada.school.external.FeignBoredApi;
 import tech.ada.school.repositories.AlunoRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -21,9 +23,15 @@ public class AlunoServiceBD implements  IAlunoService{
     private final FeignBoredApi boredApi;
 
     @Override
-    public AlunoDto criarAluno(AlunoDto pedido) {
+    public AlunoDto criarAluno(AlunoDto pedido) throws DuplicateKeyException {
 
         Aluno a = AlunoMapper.toEntity(pedido);
+
+        final Optional<Aluno> at = repository.findByCpf(a.getCpf());
+        boolean cpfPresente = at.map(Aluno::getCpf).filter(cpf -> cpf.equals(a.getCpf())).isPresent();
+        if (cpfPresente) {
+            throw new DuplicateKeyException(Aluno.class, a.getCpf());
+        }
 
         return AlunoMapper.toDto(repository.save(a), boredApi.getActivity().activity());
     }

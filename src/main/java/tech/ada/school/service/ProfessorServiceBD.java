@@ -5,11 +5,13 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import tech.ada.school.domain.dto.ProfessorDto;
 import tech.ada.school.domain.entities.Professor;
+import tech.ada.school.domain.exception.DuplicateKeyException;
 import tech.ada.school.domain.exception.NotFoundException;
 import tech.ada.school.domain.mappers.ProfessorMapper;
 import tech.ada.school.repositories.ProfessorRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -19,9 +21,15 @@ public class ProfessorServiceBD implements IProfessorService {
     private final ProfessorRepository repository;
 
     @Override
-    public ProfessorDto criarProfessor(ProfessorDto pedido) {
+    public ProfessorDto criarProfessor(ProfessorDto pedido) throws DuplicateKeyException {
 
         Professor p = ProfessorMapper.toEntity(pedido);
+
+        final Optional<Professor> pt = repository.findByCpf(p.getCpf());
+        boolean cpfPresente = pt.map(Professor::getCpf).filter(cpf -> cpf.equals(p.getCpf())).isPresent();
+        if (cpfPresente) {
+            throw new DuplicateKeyException(Professor.class, p.getCpf());
+        }
 
         return ProfessorMapper.toDto(repository.save(p));
 

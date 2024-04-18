@@ -3,6 +3,7 @@ package tech.ada.school.domain.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import tech.ada.school.domain.exception.DuplicateKeyException;
 import tech.ada.school.domain.exception.NotFoundException;
 
 import java.util.Collection;
@@ -22,6 +23,13 @@ public class ErrorResponse {
 
     public static ErrorResponse createFromException(NotFoundException ex) {
         String message = "No record of " + ex.getClazz().getSimpleName() + " found for id " + ex.getId();
+
+        return new ErrorResponse(message);
+    }
+
+    public static ErrorResponse createFromException(DuplicateKeyException ex) {
+        String message = "Conflict detected for " + ex.getClazz().getSimpleName()
+                + " with id " + ex.getKey() + ". Please refresh the data or verify the changes and try again.";
 
         return new ErrorResponse(message);
     }

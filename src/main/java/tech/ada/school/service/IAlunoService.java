@@ -1,12 +1,13 @@
 package tech.ada.school.service;
 
 import tech.ada.school.domain.dto.AlunoDto;
+import tech.ada.school.domain.exception.DuplicateKeyException;
 import tech.ada.school.domain.exception.NotFoundException;
 
 import java.util.List;
 
 public interface IAlunoService {
-    AlunoDto criarAluno(AlunoDto pedido);
+    AlunoDto criarAluno(AlunoDto pedido) throws DuplicateKeyException;
 
     List<AlunoDto> listarAlunos();
 
