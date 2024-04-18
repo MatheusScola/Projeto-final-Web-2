@@ -7,6 +7,7 @@ import tech.ada.school.domain.dto.AlunoDto;
 import tech.ada.school.domain.entities.Aluno;
 import tech.ada.school.domain.exception.NotFoundException;
 import tech.ada.school.domain.mappers.AlunoMapper;
+import tech.ada.school.external.FeignBoredApi;
 import tech.ada.school.repositories.AlunoRepository;
 
 import java.util.List;
@@ -17,13 +18,14 @@ import java.util.List;
 public class AlunoServiceBD implements  IAlunoService{
 
     private final AlunoRepository repository;
+    private final FeignBoredApi boredApi;
 
     @Override
     public AlunoDto criarAluno(AlunoDto pedido) {
 
         Aluno a = AlunoMapper.toEntity(pedido);
 
-        return AlunoMapper.toDto(repository.save(a));
+        return AlunoMapper.toDto(repository.save(a), boredApi.getActivity().activity());
     }
 
     @Override
@@ -31,7 +33,7 @@ public class AlunoServiceBD implements  IAlunoService{
         return repository
                 .findAll()
                 .stream()
-                .map(AlunoMapper::toDto)
+                .map(aluno -> AlunoMapper.toDto(aluno, boredApi.getActivity().activity()))
                 .toList();
     }
 
@@ -40,13 +42,13 @@ public class AlunoServiceBD implements  IAlunoService{
         return repository
                 .findByTurma(turma)
                 .stream()
-                .map(AlunoMapper::toDto)
+                .map(aluno -> AlunoMapper.toDto(aluno, boredApi.getActivity().activity()))
                 .toList();
     }
 
     @Override
     public AlunoDto buscarAluno(int id) throws NotFoundException {
-        return AlunoMapper.toDto(buscarAlunoPorId(id));
+        return AlunoMapper.toDto(buscarAlunoPorId(id), boredApi.getActivity().activity());
     }
 
     @Override
@@ -59,7 +61,7 @@ public class AlunoServiceBD implements  IAlunoService{
         a.setEmail(novoAluno.getEmail() == null ? a.getEmail() : novoAluno.getEmail());
         a.setTurma(novoAluno.getTurma() == null ? a.getTurma() : novoAluno.getTurma());
 
-        return AlunoMapper.toDto(repository.save(a));
+        return AlunoMapper.toDto(repository.save(a), boredApi.getActivity().activity());
     }
 
     @Override
@@ -81,6 +83,6 @@ public class AlunoServiceBD implements  IAlunoService{
     public AlunoDto buscarAlunoPorCpf(String cpf) throws NotFoundException {
         return AlunoMapper.toDto(repository
                 .findByCpf(cpf)
-                .orElseThrow(() -> new NotFoundException(Aluno.class, cpf)));
+                .orElseThrow(() -> new NotFoundException(Aluno.class, cpf)), boredApi.getActivity().activity());
     }
 }

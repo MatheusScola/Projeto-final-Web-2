@@ -14,13 +14,14 @@ public class AlunoMapper {
                 .build();
     }
 
-    public static AlunoDto toDto(Aluno entity) {
+    public static AlunoDto toDto(Aluno entity, String activity) {
         return new AlunoDto(
                 entity.getId(),
                 entity.getNome(),
                 entity.getCpf(),
                 entity.getEmail(),
-                entity.getTurma()
+                entity.getTurma(),
+                activity
         );
     }
 
